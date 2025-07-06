@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      for (ToDo todoo in todosList) TodoItems(todo: todoo, ontodoChange: _handleTodoChange,),
+                      for (ToDo todoo in todosList) TodoItems(todo: todoo, ontodoChange: _handleTodoChange, onDelete: _onDelete,),
                     ],
                   ),
                 ),
@@ -58,15 +58,14 @@ class _HomeState extends State<Home> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: const [
-                        // Use a list for multiple shadows if needed
                         BoxShadow(
                           color: Colors.grey, // Shadow color
                           offset: Offset(
                             0.0,
                             0.0,
-                          ), // X: no shift, Y: 5 pixels down
-                          blurRadius: 10, // **Key for softness**
-                          spreadRadius: 0, // Slightly expands the shadow
+                          ),
+                          blurRadius: 10,
+                          spreadRadius: 0,
                         ),
                       ],
                       borderRadius: BorderRadius.circular(10),
@@ -83,7 +82,9 @@ class _HomeState extends State<Home> {
                 Container(
                   margin: EdgeInsets.only(bottom: 20, right: 20),
                   child: ElevatedButton( style: ElevatedButton.styleFrom(backgroundColor: tdBlue, minimumSize: Size(60, 60), elevation: 10,),
-                      onPressed: (){}, child: Text("+", style: GoogleFonts.poppins(fontSize: 40, color: Colors.white),)
+                      onPressed: (){
+                    //add container and func
+                      }, child: Text("+", style: GoogleFonts.poppins(fontSize: 40, color: Colors.white),)
                   ),
 
                 )
@@ -101,8 +102,13 @@ class _HomeState extends State<Home> {
       todo.isDone =!todo.isDone;
     });
   }
-}
 
+  void _onDelete(String id){
+    setState(() {
+      todosList.removeWhere((item) => item.id == id);
+    });
+  }
+}
 
 
 

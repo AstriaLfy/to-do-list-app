@@ -6,8 +6,9 @@ import '../models/todo.dart';
 class TodoItems extends StatelessWidget {
   final ToDo todo;
   final ontodoChange;
+  final onDelete;
 
-  const TodoItems({super.key, required this.todo, required this.ontodoChange});
+  const TodoItems({super.key, required this.todo, required this.ontodoChange, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class TodoItems extends StatelessWidget {
             color: tdRed,
             borderRadius: BorderRadius.circular(10)
           ),child: Center( child:
-            IconButton(onPressed:() {print("delete test");}, icon: Icon(Icons.delete, color: Colors.white,), iconSize: 20,
+            IconButton(onPressed:() {onDelete(todo.id);}, icon: Icon(Icons.delete, color: Colors.white,), iconSize: 20,
             ),
         )
         ),
