@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final todosList = ToDo.todoList();
+  final _todoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,7 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextField(
+                      controller: _todoController,
                       decoration: InputDecoration(
                         hintText: "Add new Items",
                         border: InputBorder.none,
@@ -83,7 +85,7 @@ class _HomeState extends State<Home> {
                   margin: EdgeInsets.only(bottom: 20, right: 20),
                   child: ElevatedButton( style: ElevatedButton.styleFrom(backgroundColor: tdBlue, minimumSize: Size(60, 60), elevation: 10,),
                       onPressed: (){
-                    //add container and func
+                    addTodoItem(_todoController.text);
                       }, child: Text("+", style: GoogleFonts.poppins(fontSize: 40, color: Colors.white),)
                   ),
 
@@ -94,7 +96,6 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
-
   }
 
   void _handleTodoChange(ToDo todo){
@@ -103,11 +104,19 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void addTodoItem(String x){
+    setState(() {
+      todosList.add(ToDo(id: DateTime.now().millisecondsSinceEpoch.toString(), todoText: x));
+    });
+    _todoController.clear();
+  }
+
   void _onDelete(String id){
     setState(() {
       todosList.removeWhere((item) => item.id == id);
     });
   }
+
 }
 
 
